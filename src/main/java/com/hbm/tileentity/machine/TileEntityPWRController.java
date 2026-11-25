@@ -319,6 +319,7 @@ public class TileEntityPWRController extends TileEntityMachineBase
 
     /** 1.7 {@code meltDown}: the controller goes, every fuel rod becomes corium, and the core explodes. */
     protected void meltDown(Level level, BlockPos pos) {
+        if (ModPwrContent.DISABLE_MELTDOWNS.get(level)) return;
         level.destroyBlock(pos, false);
 
         double x = 0;
