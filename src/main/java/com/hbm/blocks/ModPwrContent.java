@@ -5,8 +5,6 @@ import com.hbm.registration.Reg;
 import com.hbm.items.machine.ItemPWRFuel.EnumPWRFuel;
 import dev.golem.core.registry.DeferredRegister;
 import dev.golem.core.registry.RegistryObject;
-import dev.golem.core.world.WorldRules;
-import dev.golem.core.world.WorldRules.BoolRule;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import com.hbm.inventory.ModPwrMenus;
@@ -15,7 +13,6 @@ import com.hbm.tileentity.ModPwrBlockEntities;
 
 /** One common bootstrap hook for the pressurized water reactor's feature-local registries. */
 public final class ModPwrContent {
-    public static final BoolRule DISABLE_MELTDOWNS = WorldRules.bool("pwrDisableMeltdowns", false);
     private ModPwrContent() {}
 
     public static final DeferredRegister<SoundEvent> SOUNDS =

@@ -46,6 +46,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import com.hbm.main.ModWorldRules;
 import com.hbm.blocks.ModPwrBlocks;
 import com.hbm.blocks.ModPwrContent;
 import com.hbm.inventory.container.ContainerPWR;
@@ -319,7 +320,7 @@ public class TileEntityPWRController extends TileEntityMachineBase
 
     /** 1.7 {@code meltDown}: the controller goes, every fuel rod becomes corium, and the core explodes. */
     protected void meltDown(Level level, BlockPos pos) {
-        if (ModPwrContent.DISABLE_MELTDOWNS.get(level)) return;
+        if (ModWorldRules.PWR_DISABLE_MELTDOWNS.get(level)) return;
         level.destroyBlock(pos, false);
 
         double x = 0;

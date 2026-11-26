@@ -2,6 +2,7 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.util.Owners;
 import dev.golem.core.world.Explosions;
+import com.hbm.main.ModWorldRules;
 import com.hbm.advancement.DetonationTrigger;
 import com.hbm.advancement.HbmCriteria;
 import com.hbm.api.data.ReactorDataMaps;
@@ -50,6 +51,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
+import dev.golem.core.world.WorldRules;
+import dev.golem.core.world.WorldRules.BoolRule;
 import dev.golem.core.data.DataIn;
 import dev.golem.core.data.DataOut;
 import net.minecraft.world.phys.AABB;
@@ -134,7 +137,14 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements IF
 
         te.pressure = te.carbonDioxide.getFill() * 2
                 + (int) ((float) te.heat * ((float) te.carbonDioxide.getFill() / te.carbonDioxide.getMaxFill()));
-        if (te.heat > 0 && te.heat < MAX_HEAT) {
+
+        boolean disableMeltdowns = ModWorldRules.ZIRNOX_DISABLE_MELTDOWNS.get(level);
+        if (disableMeltdowns) {
+            te.heat = Math.min(te.heat, MAX_HEAT);
+            te.pressure = Math.min(te.pressure, MAX_PRESSURE);
+        }
+
+        if (te.heat > 0 && (te.heat < MAX_HEAT || disableMeltdowns)) {
             if (te.water.getFill() > 0 && te.carbonDioxide.getFill() > 0 && te.steam.getFill() < te.steam.getMaxFill()) {
                 // 1.7.10 generateSteam: only above 10,256 heat, factor 25 * mult with mult = 7.5F (not 5).
                 if (te.heat > 10_256) {
@@ -153,7 +163,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements IF
                 SatelliteRayScan.reportEvent(level, pos.getX(), pos.getY(), pos.getZ(),
                         SatelliteRayScan.RayEvent.INFO_NUCLEAR, 200);
         }
-        if (te.heat > MAX_HEAT || te.pressure > MAX_PRESSURE) {
+        if (!disableMeltdowns && (te.heat > MAX_HEAT || te.pressure > MAX_PRESSURE)) {
             te.meltdown(level, pos, state);
             return;
         }

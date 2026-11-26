@@ -165,6 +165,7 @@ import com.hbm.world.gen.ModBiomeModifiers;
 import com.hbm.world.gen.ModFeatures;
 import com.hbm.world.gen.NTMComponentStructures;
 import com.hbm.world.gen.NTMWorldGenerator;
+import com.hbm.main.ModWorldRules;
 import dev.golem.core.platform.ConfigFiles;
 import dev.golem.core.platform.Lifecycle;
 import dev.golem.core.world.BiomeFeatures;
@@ -325,6 +326,7 @@ public final class MainRegistry {
         ModIntermediateItems.init();   // recipe intermediates (circuit / item_expensive / chunk_ore)
         ModIngredientItems.init(); // escaped metadata families: generic parts, ash, and plate fuel
         ModBatteryItems.init();    // modern battery / capacitor items (the socket's storage medium)
+        ModWorldRules.init();   // world rules
         ModUpgradeItems.init(); // machine upgrade modules (speed/effect/power/overdrive)
         ModFuelItems.init();  // the ItemFuel family (furnace-burnable; burn times wired per loader)
         ModOilItems.init();   // oil-chain items (oil_tar variants + oil_detector)
